@@ -7,46 +7,59 @@
 .today{background:linear-gradient(135deg,#eef8ff,#f4fbff);border-radius:18px;padding:15px;display:flex;justify-content:space-between;align-items:center}.today strong{font-size:17px}.badge{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:23px;font-weight:900}.bw{background:#25a75b}.br{background:#3399e6}.detail{font-size:12px;color:#718096;margin-top:5px}
 .nav{display:flex;align-items:center;margin:17px 0 9px}.nav button{border:0;background:transparent;font-size:28px;padding:5px 12px}.month{flex:1;text-align:center;font-weight:850;font-size:20px}
 .week,.grid{display:grid;grid-template-columns:repeat(7,1fr)}.week div{text-align:center;font-size:12px;color:#6d7988;padding:7px 0}.week div:first-child,.week div:last-child{color:#f04438}
-.slider{touch-action:pan-y;position:relative}.grid{border-top:1px solid #edf0f3;border-left:1px solid #edf0f3}.day{height:82px;text-align:center;border-right:1px solid #edf0f3;border-bottom:1px solid #edf0f3;padding:6px 1px;position:relative}.day.blank{background:#fafafa}.num{font-weight:750;font-size:15px}.weekend .num{color:#f04438}.mark{margin:5px auto 0;width:29px;height:29px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:15px}.work{background:#c9f3d4;color:#16733b}.rest{background:#d8efff;color:#1674bd}.holiday{font-size:9px;color:#f04438;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adjust{position:absolute;right:3px;top:2px;color:#8b5cf6;font-size:9px}.todayCell{outline:2px solid #2684ff;outline-offset:-2px;border-radius:5px}
+.slider{touch-action:pan-y}.grid{border-top:1px solid #edf0f3;border-left:1px solid #edf0f3}.day{height:88px;text-align:center;border-right:1px solid #edf0f3;border-bottom:1px solid #edf0f3;padding:5px 1px;position:relative}.day.blank{background:#fafafa}.num{font-weight:750;font-size:15px}.weekend .num{color:#f04438}.mark{margin:4px auto 0;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:15px}.work{background:#c9f3d4;color:#16733b}.rest{background:#d8efff;color:#1674bd}.lunar{font-size:9px;color:#7b8794;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1px}.festival{color:#e23b31;font-weight:700}.official{font-size:9px;color:#f04438;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adjust{position:absolute;right:3px;top:2px;color:#8b5cf6;font-size:9px}.todayCell{outline:2px solid #2684ff;outline-offset:-2px;border-radius:5px}
 .stats{margin-top:14px;border-radius:16px;background:#f8fafc;padding:13px;display:flex;align-items:center}.stats b{margin-right:auto}.pill{font-size:12px;margin-left:10px}.pill i{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-style:normal;font-weight:900;margin-right:3px}
 .help{font-size:11px;color:#7b8794;text-align:center;margin:11px 0}.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #e7ebef;padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px}.bottom button{flex:1;border:0;border-radius:11px;padding:10px;background:#f1f4f7}
 dialog{border:0;border-radius:18px;width:min(90vw,390px);padding:18px;box-shadow:0 15px 50px #0003}dialog::backdrop{background:#0005}select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:8px 0 14px}.actions{display:flex;gap:7px;justify-content:flex-end}.actions button{border:0;border-radius:10px;padding:9px 12px}.primary{background:#1677ff;color:#fff}.danger{color:#b42318}.history{max-height:320px;overflow:auto}.hist{padding:10px 0;border-bottom:1px solid #eee;font-size:13px}
 </style></head><body><main class="app">
-<h1>上二休二</h1><div class="sub">简单 · 清晰 · 一目了然</div>
+<h1>上二休二</h1><div class="sub">班休清晰 · 农历节日 · 左右滑动</div>
 <section class="today"><div><strong id="todayText"></strong><div class="detail" id="todayDetail"></div></div><div class="badge" id="todayBadge"></div></section>
 <div class="nav"><button id="prev">‹</button><div class="month" id="monthTitle"></div><button id="next">›</button></div>
 <div class="week"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div>
 <div class="slider" id="slider"><div class="grid" id="grid"></div></div>
-<div class="stats"><b>本月统计</b><span class="pill"><i class="work">班</i> <span id="workCount"></span>天</span><span class="pill"><i class="rest">休</i> <span id="restCount"></span>天</span></div>
-<div class="help">← 左右滑动切换月份　·　点击日期可以调班 →</div>
-</main>
+<div class="stats"><b>本月统计</b><span class="pill"><i class="work">班</i><span id="workCount"></span>天</span><span class="pill"><i class="rest">休</i><span id="restCount"></span>天</span></div>
+<div class="help">← 左右滑动切换月份　·　点击日期可以调班 →</div></main>
 <div class="bottom"><button id="todayBtn">回到今天</button><button id="historyBtn">调班记录</button><button id="backupBtn">备份</button></div>
-<dialog id="dlg"><h3 id="dlgTitle"></h3><div id="dlgHoliday" style="color:#f04438;font-size:12px"></div><select id="sel"><option value="0">班（上班第1天）</option><option value="1">班（上班第2天）</option><option value="2">休（休息第1天）</option><option value="3">休（休息第2天）</option></select><div class="actions"><button id="del" class="danger">删除调班</button><button id="cancel">取消</button><button id="save" class="primary">保存</button></div></dialog>
+<dialog id="dlg"><h3 id="dlgTitle"></h3><div id="dlgInfo" style="color:#f04438;font-size:12px"></div><select id="sel"><option value="0">班（上班第1天）</option><option value="1">班（上班第2天）</option><option value="2">休（休息第1天）</option><option value="3">休（休息第2天）</option></select><div class="actions"><button id="del" class="danger">删除调班</button><button id="cancel">取消</button><button id="save" class="primary">保存</button></div></dialog>
 <dialog id="histDlg"><h3>调班记录</h3><div id="hist" class="history"></div><div class="actions"><button id="closeHist">关闭</button></div></dialog>
 <script>
 const BASE='2026-09-23',N=['班','班','休','休'];
-const H={
-'2026-01-01':'元旦','2026-01-02':'元旦','2026-01-03':'元旦','2026-01-04':'调休上班',
-'2026-02-14':'调休上班','2026-02-15':'春节','2026-02-16':'春节','2026-02-17':'春节','2026-02-18':'春节','2026-02-19':'春节','2026-02-20':'春节','2026-02-21':'春节','2026-02-22':'春节','2026-02-23':'春节','2026-02-28':'调休上班',
-'2026-04-04':'清明节','2026-04-05':'清明节','2026-04-06':'清明节',
-'2026-05-01':'劳动节','2026-05-02':'劳动节','2026-05-03':'劳动节','2026-05-04':'劳动节','2026-05-05':'劳动节','2026-05-09':'调休上班',
-'2026-06-19':'端午节','2026-06-20':'端午节','2026-06-21':'端午节',
-'2026-09-20':'调休上班','2026-09-25':'中秋节','2026-09-26':'中秋节','2026-09-27':'中秋节',
-'2026-10-01':'国庆节','2026-10-02':'国庆节','2026-10-03':'国庆节','2026-10-04':'国庆节','2026-10-05':'国庆节','2026-10-06':'国庆节','2026-10-07':'国庆节','2026-10-10':'调休上班'};
+// 官方放假/调休只作为标注，不参与个人班休计算。
+const OFF={
+'2026-01-01':'元旦假期','2026-01-02':'元旦假期','2026-01-03':'元旦假期','2026-01-04':'官方调休上班',
+'2026-02-14':'官方调休上班','2026-02-15':'春节假期','2026-02-16':'春节假期','2026-02-17':'春节假期','2026-02-18':'春节假期','2026-02-19':'春节假期','2026-02-20':'春节假期','2026-02-21':'春节假期','2026-02-22':'春节假期','2026-02-23':'春节假期','2026-02-28':'官方调休上班',
+'2026-04-04':'清明假期','2026-04-05':'清明假期','2026-04-06':'清明假期',
+'2026-05-01':'劳动节假期','2026-05-02':'劳动节假期','2026-05-03':'劳动节假期','2026-05-04':'劳动节假期','2026-05-05':'劳动节假期','2026-05-09':'官方调休上班',
+'2026-06-19':'端午假期','2026-06-20':'端午假期','2026-06-21':'端午假期',
+'2026-09-20':'官方调休上班','2026-09-25':'中秋假期','2026-09-26':'中秋假期','2026-09-27':'中秋假期',
+'2026-10-01':'国庆假期','2026-10-02':'国庆假期','2026-10-03':'国庆假期','2026-10-04':'国庆假期','2026-10-05':'国庆假期','2026-10-06':'国庆假期','2026-10-07':'国庆假期','2026-10-10':'官方调休上班'};
 let A=JSON.parse(localStorage.getItem('shiftAdjustments')||'{}'),view=new Date(),selected='';
 const pad=n=>String(n).padStart(2,'0'),key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 function parse(s){let a=s.split('-').map(Number);return new Date(a[0],a[1]-1,a[2])}
 function diff(a,b){return Math.round((Date.UTC(a.getFullYear(),a.getMonth(),a.getDate())-Date.UTC(b.getFullYear(),b.getMonth(),b.getDate()))/86400000)}
 function cycle(d){let ks=Object.keys(A).filter(x=>x<=key(d)).sort();if(ks.length){let k=ks[ks.length-1];return(Number(A[k])+diff(d,parse(k)))%4}return((diff(d,parse(BASE))%4)+4)%4}
+const lunarFmt=new Intl.DateTimeFormat('zh-CN-u-ca-chinese',{month:'long',day:'numeric'});
+function lunarParts(d){let parts=lunarFmt.formatToParts(d),month='',day='';for(let p of parts){if(p.type==='month')month=p.value;if(p.type==='day')day=p.value}return {month,day,text:lunarFmt.format(d)}}
+function solarTerm(d){let m=d.getMonth()+1,n=d.getDate(); if(m===4 && n>=4 && n<=6)return '清明节';return ''}
+function lunarLabel(d){
+ let l=lunarParts(d),md=l.month+'|'+l.day;
+ let map={'正月|1':'春节','正月|15':'元宵节','五月|5':'端午节','七月|7':'七夕','七月|15':'中元节','八月|15':'中秋节','九月|9':'重阳节','腊月|8':'腊八节','腊月|23':'小年'};
+ let f=map[md]||solarTerm(d);
+ if(!f && l.month==='腊月'){
+   let tomorrow=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),t=lunarParts(tomorrow);
+   if(t.month==='正月' && t.day==='1') f='除夕';
+ }
+ if(f)return {text:f,festival:true};
+ return {text:(l.day==='1'?l.month:l.day),festival:false}
+}
 function render(){let y=view.getFullYear(),m=view.getMonth(),first=new Date(y,m,1),off=(first.getDay()+6)%7,total=new Date(y,m+1,0).getDate(),todayK=key(new Date()),wc=0,rc=0;monthTitle.textContent=`${y}年 ${m+1}月`;grid.innerHTML='';
 for(let i=0;i<off;i++){let x=document.createElement('div');x.className='day blank';grid.appendChild(x)}
-for(let n=1;n<=total;n++){let d=new Date(y,m,n),k=key(d),p=cycle(d),weekend=d.getDay()==0||d.getDay()==6;p<2?wc++:rc++;let x=document.createElement('div');x.className=`day ${weekend?'weekend':''} ${k===todayK?'todayCell':''}`;x.innerHTML=`<div class=num>${n}</div><div class="mark ${p<2?'work':'rest'}">${N[p]}</div>${H[k]?`<div class=holiday>${H[k]}</div>`:''}${A[k]!==undefined?'<div class=adjust>★</div>':''}`;x.onclick=()=>openAdjust(k,p);grid.appendChild(x)}
+for(let n=1;n<=total;n++){let d=new Date(y,m,n),k=key(d),p=cycle(d),weekend=d.getDay()==0||d.getDay()==6,l=lunarLabel(d);p<2?wc++:rc++;let x=document.createElement('div');x.className=`day ${weekend?'weekend':''} ${k===todayK?'todayCell':''}`;x.innerHTML=`<div class=num>${n}</div><div class="mark ${p<2?'work':'rest'}">${N[p]}</div><div class="lunar ${l.festival?'festival':''}">${l.text}</div>${OFF[k]?`<div class=official>${OFF[k]}</div>`:''}${A[k]!==undefined?'<div class=adjust>★</div>':''}`;x.onclick=()=>openAdjust(k,p,l.text);grid.appendChild(x)}
 workCount.textContent=wc;restCount.textContent=rc;renderToday()}
-function renderToday(){let d=new Date(),k=key(d),p=cycle(d);todayText.textContent=`今天 · ${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;todayBadge.textContent=N[p];todayBadge.className=`badge ${p<2?'bw':'br'}`;let q=p<2?(p===0?'上班第1天':'上班第2天'):(p===2?'休息第1天':'休息第2天');todayDetail.textContent=q+(H[k]?' · '+H[k]:'')}
-function move(n){view=new Date(view.getFullYear(),view.getMonth()+n,1);render()}
-prev.onclick=()=>move(-1);next.onclick=()=>move(1);todayBtn.onclick=()=>{view=new Date();render()}
+function renderToday(){let d=new Date(),k=key(d),p=cycle(d),l=lunarLabel(d);todayText.textContent=`今天 · ${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;todayBadge.textContent=N[p];todayBadge.className=`badge ${p<2?'bw':'br'}`;let q=['上班第1天','上班第2天','休息第1天','休息第2天'][p];todayDetail.textContent=q+' · '+l.text+(OFF[k]?' · '+OFF[k]:'')}
+function move(n){view=new Date(view.getFullYear(),view.getMonth()+n,1);render()}prev.onclick=()=>move(-1);next.onclick=()=>move(1);todayBtn.onclick=()=>{view=new Date();render()}
 let sx=0,sy=0;slider.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});slider.addEventListener('touchend',e=>{let dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)move(dx<0?1:-1)},{passive:true});
-function openAdjust(k,p){selected=k;dlgTitle.textContent=k;dlgHoliday.textContent=H[k]||'';sel.value=A[k]!==undefined?A[k]:p;dlg.showModal()}
+function openAdjust(k,p,l){selected=k;dlgTitle.textContent=k;dlgInfo.textContent=l+(OFF[k]?' · '+OFF[k]:'');sel.value=A[k]!==undefined?A[k]:p;dlg.showModal()}
 save.onclick=()=>{A[selected]=Number(sel.value);localStorage.setItem('shiftAdjustments',JSON.stringify(A));dlg.close();render()};del.onclick=()=>{delete A[selected];localStorage.setItem('shiftAdjustments',JSON.stringify(A));dlg.close();render()};cancel.onclick=()=>dlg.close();
 historyBtn.onclick=()=>{let ks=Object.keys(A).sort();hist.innerHTML=ks.length?ks.map(k=>`<div class=hist><b>${k}</b>　${N[A[k]]}（${['上班第1天','上班第2天','休息第1天','休息第2天'][A[k]]}）</div>`).join(''):'暂无调班记录';histDlg.showModal()};closeHist.onclick=()=>histDlg.close();
 backupBtn.onclick=()=>{let b=new Blob([JSON.stringify({base:BASE,adjustments:A},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='排班备份.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
